@@ -1,4 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using TabletopStats.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddDbContext<RpgContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("RpgContext");
+    options.UseSqlServer(connectionString);
+});
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
