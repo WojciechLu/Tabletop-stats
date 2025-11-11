@@ -1,0 +1,6 @@
+@TabletopStats.UI.Net_HostAddress = http://localhost:5176
+
+GET {{TabletopStats.UI.Net_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
