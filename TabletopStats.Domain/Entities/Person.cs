@@ -1,12 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace TabletopStats.Infrastructure.Entity;
+namespace TabletopStats.Domain.Entities;
 
 public class Person
 {
     [Key]
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     
     [Required]
     public string Name { get; set; }

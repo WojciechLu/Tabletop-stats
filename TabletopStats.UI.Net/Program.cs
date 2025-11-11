@@ -1,14 +1,22 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using TabletopStats.Application.UseCases;
 using TabletopStats.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<RpgContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("RpgContext");
-    options.UseSqlServer(connectionString);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("RpgContext"));
 });
+
+builder.Services.AddInjectionInfrastructure();
+builder.Services.AddApplication();
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -16,10 +24,13 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+app.MapControllers();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

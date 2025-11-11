@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TabletopStats.Infrastructure.Entity;
+namespace TabletopStats.Domain.Entities;
 
 public class RpgSystem
 {

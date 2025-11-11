@@ -13,9 +13,11 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TabletopStats.Application.UseCases\TabletopStats.Application.UseCases.csproj" />
       <ProjectReference Include="..\TabletopStats.Infrastructure\TabletopStats.Infrastructure.csproj" />
     </ItemGroup>
 

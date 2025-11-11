@@ -22,4 +22,9 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\TabletopStats.Application.Interface\TabletopStats.Application.Interface.csproj" />
+      <ProjectReference Include="..\TabletopStats.Domain\TabletopStats.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

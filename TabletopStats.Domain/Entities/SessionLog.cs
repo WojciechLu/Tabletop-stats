@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TabletopStats.Domain.Entities;
 
-namespace TabletopStats.Infrastructure.Entity;
+namespace TabletopStats.Domain.Entities;
 
 public class SessionLog
 {
@@ -18,8 +19,6 @@ public class SessionLog
     
     [Required]
     public RpgSystem RpgSystem { get; set; }
-    
-    // public Guid? GameMasterId { get; set; }
     public Person? GameMaster { get; set; }
     
     [Required]
