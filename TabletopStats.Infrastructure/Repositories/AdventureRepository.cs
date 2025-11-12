@@ -3,15 +3,15 @@ using TabletopStats.Domain.Entities;
 
 namespace TabletopStats.Infrastructure.Repositories;
 
-public class SessionLogRepository(RpgContext context): ISessionLogRepository
+public class AdventureRepository(RpgContext context): IAdventureRepository
 {
-    public async Task InsertAsync(SessionLog entity)
+    public async Task InsertAsync(Adventure entity)
     {
-        await context.AddAsync(entity);
+        await context.Adventures.AddAsync(entity);
         await context.SaveChangesAsync();
     }
 
-    public Task UpdateAsync(SessionLog entity)
+    public Task UpdateAsync(Adventure entity)
     {
         throw new NotImplementedException();
     }
@@ -21,12 +21,12 @@ public class SessionLogRepository(RpgContext context): ISessionLogRepository
         throw new NotImplementedException();
     }
 
-    public Task<SessionLog?> GetAsync(Guid id)
+    public Task<Adventure?> GetAsync(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<SessionLog>> GetAllAsync()
+    public Task<IEnumerable<Adventure>> GetAllAsync()
     {
         throw new NotImplementedException();
     }

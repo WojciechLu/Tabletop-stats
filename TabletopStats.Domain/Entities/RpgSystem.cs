@@ -8,5 +8,8 @@ public class RpgSystem
     public Guid SystemId { get; set; }
     
     [Required]
+    public string Code { get; set; }
+    
+    [Required]
     public string Name { get; set; }
 }

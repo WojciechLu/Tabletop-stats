@@ -5,7 +5,7 @@ namespace TabletopStats.Infrastructure.Repositories;
 
 public class PersonRepository(RpgContext context): IPersonRepository
 {
-    public Task<bool> InsertAsync(Person entity)
+    public Task InsertAsync(Person entity)
     {
         try
         {
@@ -19,17 +19,17 @@ public class PersonRepository(RpgContext context): IPersonRepository
         }
     }
 
-    public Task<bool> UpdateAsync(Person entity)
+    public Task UpdateAsync(Person entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteAsync(string id)
+    public Task<bool> DeleteAsync(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Person> GetAsync(string id)
+    public Task<Person?> GetAsync(Guid id)
     {
         throw new NotImplementedException();
     }
@@ -37,5 +37,10 @@ public class PersonRepository(RpgContext context): IPersonRepository
     public Task<IEnumerable<Person>> GetAllAsync()
     {
         throw new NotImplementedException();
+    }
+
+    public IEnumerable<Person> GetList(IEnumerable<Guid> select)
+    {
+        return context.Persons.Where(x => select.Contains(x.Id));
     }
 }

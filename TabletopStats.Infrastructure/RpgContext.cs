@@ -8,6 +8,8 @@ public class RpgContext(DbContextOptions options) : DbContext(options)
     public DbSet<Person>  Persons { get; set; }
     public DbSet<SessionLog>  SessionLogs { get; set; }
     public DbSet<RpgSystem>  RpgSystems { get; set; }
+    public DbSet<Adventure>  Adventures { get; set; }
+    public DbSet<Campaign>  Campaigns { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

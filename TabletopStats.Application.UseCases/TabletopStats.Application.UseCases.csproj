@@ -8,11 +8,13 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="15.1.0" />
+      <PackageReference Include="FluentValidation" Version="12.1.0" />
       <PackageReference Include="MediatR" Version="13.1.0" />
       <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TabletopStats.Application.Dto\TabletopStats.Application.Dto.csproj" />
       <ProjectReference Include="..\TabletopStats.Application.Interface\TabletopStats.Application.Interface.csproj" />
     </ItemGroup>
 

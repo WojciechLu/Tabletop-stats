@@ -10,6 +10,9 @@ public static class ConfigureServices
     {
         services.AddScoped<ISessionLogRepository, SessionLogRepository>();
         services.AddScoped<IPersonRepository, PersonRepository>();
+        services.AddScoped<IRpgSystemRepository, RpgSystemRepository>();
+        services.AddScoped<IAdventureRepository, AdventureRepository>();
+        services.AddScoped<ICampaignRepository, CampaignRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;

@@ -3,7 +3,7 @@ using TabletopStats.Application.Interface.Persistence;
 using TabletopStats.Application.UseCases.Commons.Bases;
 using TabletopStats.Domain.Entities;
 
-namespace TabletopStats.Application.UseCases.Customers.Commands.CreatePlayer;
+namespace TabletopStats.Application.UseCases.Persons.Commands.CreatePlayer;
 
 public class CreatePlayerHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreatePlayerCommand, BaseResponse<bool>>
 {
@@ -12,20 +12,18 @@ public class CreatePlayerHandler(IUnitOfWork unitOfWork) : IRequestHandler<Creat
         var response = new BaseResponse<bool>();
         try
         {
-            response.Data = await unitOfWork.Persons.InsertAsync(new Person
+            await unitOfWork.Persons.InsertAsync(new Person
             {
                 Name = request.PlayerName
             });
-            if (response.Data) 
-            {
-                response.succcess = true;
-                response.Message  = "Create succeed!";
-            }
         }
         catch (Exception ex)
         {
             response.Message  = ex.Message;
         }
+        response.Data = true;
+        response.succcess = true;
+        response.Message  = "Create succeed!";
         return response;
     }
 }

@@ -8,8 +8,11 @@ public class SessionLog
     [Key]
     public Guid SessionId { get; set; }
     
+    public Adventure? Adventure { get; set; }
+    
     [Required]
     public string SessionName { get; set; }
+    public string Description { get; set; }
     
     [Required]
     public DateTime StartTime { get; set; }

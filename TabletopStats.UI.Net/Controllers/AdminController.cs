@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using TabletopStats.Application.UseCases.Commons.Bases;
-using TabletopStats.Application.UseCases.Customers.Commands.CreatePlayer;
+using TabletopStats.Application.UseCases.Persons.Commands.CreatePlayer;
 
 namespace TabletopStats.UI.Net.Controllers;
 
