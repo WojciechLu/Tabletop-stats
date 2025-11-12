@@ -11,22 +11,22 @@ public class CreateSessionLogHandler(IUnitOfWork unitOfWork) : IRequestHandler<C
         var adventure = request.AdventureId.HasValue
             ? await unitOfWork.Adventures.GetAsync(request.AdventureId.Value)
             : null;
-        var rpgSystem = unitOfWork.RpgSystems.GetByCode(request.RpgSystemCode);
-        var players = unitOfWork.Persons.GetList(request.Players.Select(x => x.Id));
+        var rpgSystem = await unitOfWork.RpgSystems.GetByCode(request.RpgSystemCode);
+        var players = await unitOfWork.Persons.GetList(request.Players.Select(x => x.Id));
         var gameMaster = request.GameMaster?.Id != null
             ? await unitOfWork.Persons.GetAsync(request.GameMaster.Id)
             : null;
 
         var session = new Domain.Entities.SessionLog
         {
-            SessionId = default,
+            SessionId = Guid.NewGuid(),
             SessionName = request.SessionName,
             Description = request.Description,
             StartTime = request.StartTime,
             EndTime = request.EndTime,
             RpgSystem = rpgSystem,
             GameMaster = gameMaster,
-            Players = players.ToList(),
+            Players = players,
             Adventure = adventure
         };
         try

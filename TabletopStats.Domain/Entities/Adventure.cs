@@ -11,4 +11,7 @@ public class Adventure
     public string Description { get; set; }
     [Required]
     public List<SessionLog> Sessions { get; set; }
+    
+    [Required]
+    public Campaign Campaign { get; set; }
 }

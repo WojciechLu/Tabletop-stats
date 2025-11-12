@@ -1,4 +1,5 @@
-﻿using TabletopStats.Application.Interface.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using TabletopStats.Application.Interface.Persistence;
 using TabletopStats.Domain.Entities;
 
 namespace TabletopStats.Infrastructure.Repositories;
@@ -21,9 +22,9 @@ public class AdventureRepository(RpgContext context): IAdventureRepository
         throw new NotImplementedException();
     }
 
-    public Task<Adventure?> GetAsync(Guid id)
+    public async Task<Adventure?> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await context.Adventures.FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public Task<IEnumerable<Adventure>> GetAllAsync()

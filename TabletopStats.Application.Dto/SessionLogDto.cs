@@ -3,8 +3,8 @@
 public class SessionLogDto
 {
     public Guid SessionId { get; set; }
-    public Guid AdventureId { get; set; }
-    public Guid CampaignId { get; set; }
+    public Guid? AdventureId { get; set; }
+    public Guid? CampaignId { get; set; }
     
     public string SessionName { get; set; }
     public string Description { get; set; }
@@ -15,4 +15,5 @@ public class SessionLogDto
     
     public ICollection<PersonDto> Players { get; set; }
     public PersonDto? GameMaster { get; set; }
+    public RpgSystemDto RpgSystem { get; set; }
 }

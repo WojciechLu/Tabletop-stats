@@ -4,7 +4,8 @@ using TabletopStats.Application.UseCases.Commons.Bases;
 using TabletopStats.Application.UseCases.SessionLog.Commands.CreateAdventure;
 using TabletopStats.Application.UseCases.SessionLog.Commands.CreateCampaign;
 using TabletopStats.Application.UseCases.SessionLog.Commands.CreateSessionLog;
-using TabletopStats.Application.UseCases.SessionLog.Commands.GetPlayerLogs;
+using TabletopStats.Application.UseCases.SessionLog.Queries.GetGameMasterLogs;
+using TabletopStats.Application.UseCases.SessionLog.Queries.GetPlayerLogs;
 
 namespace TabletopStats.UI.Net.Controllers;
 
@@ -31,6 +32,10 @@ public class SessionLogController : ControllerBase
     
     [HttpPost("GetPlayerLogs")]
     public Task<IActionResult> GetPlayerLogs([FromBody] GetPlayerLogsQuery command)
+        => HandleRequest(command);
+    
+    [HttpPost("GetGameMasterLogs")]
+    public Task<IActionResult> GetGameMasterLogs([FromBody] GetGameMasterLogsQuery command)
         => HandleRequest(command);
 
     [HttpPost("CreateSessionLog")]

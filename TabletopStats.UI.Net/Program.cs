@@ -1,7 +1,7 @@
-using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using TabletopStats.Application.UseCases;
 using TabletopStats.Infrastructure;
+using TabletopStats.UI.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +56,10 @@ app.MapGet("/weatherforecast", () =>
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+namespace TabletopStats.UI.Net
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+    {
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
 }

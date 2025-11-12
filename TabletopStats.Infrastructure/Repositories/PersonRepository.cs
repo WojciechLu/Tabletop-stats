@@ -1,4 +1,5 @@
-﻿using TabletopStats.Application.Interface.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using TabletopStats.Application.Interface.Persistence;
 using TabletopStats.Domain.Entities;
 
 namespace TabletopStats.Infrastructure.Repositories;
@@ -29,9 +30,10 @@ public class PersonRepository(RpgContext context): IPersonRepository
         throw new NotImplementedException();
     }
 
-    public Task<Person?> GetAsync(Guid id)
+    public async Task<Person?> GetAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var person = await context.Persons.FirstOrDefaultAsync(x => x.Id == id);
+        return person;
     }
 
     public Task<IEnumerable<Person>> GetAllAsync()
@@ -39,8 +41,8 @@ public class PersonRepository(RpgContext context): IPersonRepository
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Person> GetList(IEnumerable<Guid> select)
+    public async Task<List<Person>> GetList(IEnumerable<Guid> select)
     {
-        return context.Persons.Where(x => select.Contains(x.Id));
+        return await context.Persons.Where(x => select.Contains(x.Id)).ToListAsync();
     }
 }

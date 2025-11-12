@@ -1,4 +1,5 @@
-﻿using TabletopStats.Application.Interface.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using TabletopStats.Application.Interface.Persistence;
 using TabletopStats.Domain.Entities;
 
 namespace TabletopStats.Infrastructure.Repositories;
@@ -30,8 +31,8 @@ public class RpgSystemRepository(RpgContext context): IRpgSystemRepository
         throw new NotImplementedException();
     }
 
-    public RpgSystem? GetByCode(string code)
+    public async Task<RpgSystem?> GetByCode(string code)
     {
-        return context.RpgSystems.FirstOrDefault(x => x.Code == code);
+        return await context.RpgSystems.FirstOrDefaultAsync(x => x.Code == code);
     }
 }
