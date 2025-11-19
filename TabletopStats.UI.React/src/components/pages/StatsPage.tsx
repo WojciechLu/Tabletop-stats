@@ -1,122 +1,29 @@
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { useCallback, useMemo, useState } from "react";
 import { SimpleTable, HeaderObject, Theme } from "simple-table-core";
 import "simple-table-core/styles.css";
+import sessionLogService from "../../services/sessionLogService";
+import { guid } from "../../models/types/Guid";
+import { SessionLogParsed } from "../../models/SessionLog";
 
-// Define headers
+const ROWS_PER_PAGE = 10;
 const headers: HeaderObject[] = [
-  { accessor: "id", label: "ID", width: 80, isSortable: true, type: "number" },
+  { accessor: "sessionId", label: "ID", width: 80, isSortable: false, type: "string" },
   {
-    accessor: "name",
-    label: "Name",
+    accessor: "sessionName",
+    label: "Session Name",
     minWidth: 80,
     width: "1fr",
     isSortable: true,
     type: "string",
   },
-  { accessor: "age", label: "Age", width: 100, isSortable: true, type: "number" },
-  { accessor: "role", label: "Role", width: 150, isSortable: true, type: "string" },
-  { accessor: "department", label: "Department", width: 150, isSortable: true, type: "string" },
-  { accessor: "startDate", label: "Start Date", width: 150, isSortable: true, type: "date" },
-];
-
-// Sample data
-const EMPLOYEE_DATA = [
-  {
-    id: 1,
-    name: "Marcus Rodriguez",
-    age: 29,
-    role: "Frontend Developer",
-    department: "Engineering",
-    startDate: "2022-03-15",
-  },
-  {
-    id: 2,
-    name: "Sophia Chen",
-    age: 27,
-    role: "UX/UI Designer",
-    department: "Design",
-    startDate: "2021-11-08",
-  },
-  {
-    id: 3,
-    name: "Raj Patel",
-    age: 34,
-    role: "Engineering Manager",
-    department: "Engineering",
-    startDate: "2020-01-20",
-  },
-  {
-    id: 4,
-    name: "Luna Martinez",
-    age: 23,
-    role: "Junior Developer",
-    department: "Engineering",
-    startDate: "2023-06-12",
-  },
-  {
-    id: 5,
-    name: "Tyler Anderson",
-    age: 31,
-    role: "DevOps Engineer",
-    department: "Infrastructure",
-    startDate: "2021-08-03",
-  },
-  {
-    id: 6,
-    name: "Zara Kim",
-    age: 28,
-    role: "Product Designer",
-    department: "Design",
-    startDate: "2022-01-17",
-  },
-  {
-    id: 7,
-    name: "Kai Thompson",
-    age: 26,
-    role: "Full Stack Developer",
-    department: "Engineering",
-    startDate: "2022-09-05",
-  },
-  {
-    id: 8,
-    name: "Ava Singh",
-    age: 33,
-    role: "Product Manager",
-    department: "Product",
-    startDate: "2020-07-14",
-  },
-  {
-    id: 9,
-    name: "Jordan Walsh",
-    age: 25,
-    role: "Marketing Specialist",
-    department: "Growth",
-    startDate: "2023-02-28",
-  },
-  {
-    id: 10,
-    name: "Phoenix Lee",
-    age: 30,
-    role: "Backend Developer",
-    department: "Engineering",
-    startDate: "2021-05-11",
-  },
-  {
-    id: 11,
-    name: "River Jackson",
-    age: 24,
-    role: "Growth Designer",
-    department: "Design",
-    startDate: "2023-01-09",
-  },
-  {
-    id: 12,
-    name: "Atlas Morgan",
-    age: 32,
-    role: "Tech Lead",
-    department: "Engineering",
-    startDate: "2019-12-02",
-  },
+  { accessor: "rpgSystemName", label: "Rpg System", width: 150, isSortable: true, type: "string" },
+  { accessor: "description", label: "Description", width: 100, isSortable: true, type: "string" },
+  { accessor: "gameMasterName", label: "Game Master", width: 150, isSortable: true, type: "string" },
+  { accessor: "players", label: "Players", width: 150, isSortable: true, type: "other" },
+  { accessor: "parsedStartTime", label: "Date", width: 150, isSortable: true, type: "date" },
+  { accessor: "duration", label: "Duration [h]", width: 150, isSortable: true, type: "string" },
 ];
 
 const StatsPage = ({
@@ -126,16 +33,57 @@ const StatsPage = ({
   height?: string | number;
   theme?: Theme;
 }) => {
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(ROWS_PER_PAGE);
+  
+  const { isPending, isError, error, data, isFetching } =
+    useQuery({
+      queryKey: ['playerSessionLogs', pageNumber, pageSize],
+      queryFn: () => sessionLogService.fetchPlayerSessionLogs(pageNumber, pageSize, guid("D6434E4D-0B8C-4892-9803-4702038BB818")),
+      placeholderData: keepPreviousData,
+    })
+
+  const parsedRows: SessionLogParsed[] = useMemo(() => {
+    if(!data) return [];
+    return data.data.map(value => {
+      const parsedRow: SessionLogParsed = {
+        sessionId: value.sessionId,
+        sessionName: value.sessionName,
+        description: value.description,
+        parsedStartTime: value.startTime.split('T')[0],
+        parsedEndTime: value.endTime.split('T')[0],
+        duration: `${value.duration.split(':')[0]}:${value.duration.split(':')[1]}`,
+        playerNames: value.players.map(x => x.name),
+        gameMasterName: value.gameMaster?.name,
+        rpgSystemName: value.rpgSystem.name
+      }
+      return parsedRow;
+    })
+  }, [pageNumber, pageSize, data])
+
+  if (isPending) {
+    return <span>Loading...</span>
+  }
+
+  if (isError) {
+    return <span>Error: {error.message}</span>
+  }
+
   return (
     <SimpleTable
       defaultHeaders={headers}
       editColumns
       height={height}
-      rowIdAccessor="id"
-      rows={EMPLOYEE_DATA}
+      rowIdAccessor="sessionId"
       rowHeight={32}
       selectableCells
+      rows={parsedRows}
+      rowsPerPage={pageSize}
+      serverSidePagination
+      shouldPaginate
       theme={theme}
+      // onPageChange={pageChange}
+      // totalRowCount={data.totalRowCount}
     />
   );
 };

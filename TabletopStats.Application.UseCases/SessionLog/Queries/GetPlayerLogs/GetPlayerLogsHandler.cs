@@ -12,10 +12,15 @@ public class GetPlayerLogsHandler(IUnitOfWork unitOfWork, IMapper mapper) : IReq
     {
         var sessions = await unitOfWork.SessionLogs.GetPlayerLogsAsync(request.PlayerId, request.PageNumber, request.PageSize);
         var sessionDtos = mapper.Map<IEnumerable<SessionLogDto>>(sessions);
+        var sessionDts = sessionDtos.Select(x => x with
+        {
+            Duration = x.EndTime - x.StartTime
+        }).ToList().AsReadOnly();
+        
         return new BaseResponse<IEnumerable<SessionLogDto>>
         {
             succcess = true,
-            Data = sessionDtos
+            Data = sessionDts
         };
     }
 }

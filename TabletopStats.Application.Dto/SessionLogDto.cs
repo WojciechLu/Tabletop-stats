@@ -1,6 +1,6 @@
 ﻿namespace TabletopStats.Application.Dto;
 
-public class SessionLogDto
+public record SessionLogDto
 {
     public Guid SessionId { get; set; }
     public Guid? AdventureId { get; set; }

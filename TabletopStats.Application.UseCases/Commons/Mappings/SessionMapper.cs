@@ -13,7 +13,7 @@ public static class SessionMapper
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.StartTime, src => src.StartTime)
             .Map(dest => dest.EndTime, src => src.EndTime)
-            .Map(dest => dest.Duration, src => src.EndTime - src.StartTime)
+            .Map(dest => dest.Duration, src => (src.EndTime - src.StartTime))
             .Map(dest => dest.RpgSystem, src => src.RpgSystem)
             .Map(dest => dest.GameMaster, src => src.GameMaster)
             .Map(dest => dest.Players, src => src.Players)
