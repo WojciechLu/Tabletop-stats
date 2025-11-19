@@ -6,28 +6,24 @@
     "@tanstack/react-router": "^1.136.8",
     "@tanstack/react-router-devtools": "^1.136.8",
     "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.126",
+    "@types/node": "^20.19.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.5",
-    "react-scripts": "5.0.1",
-    "simple-table-core": "^1.7.1",
-    "web-vitals": "^2.1.4"
+    "simple-table-core": "^1.7.1"
   },
   "scripts": {
     "generate-routes": "tsr generate",
     "watch-routes": "tsr watch",
-    "start": "react-scripts start",
+    "start": "vite start",
     "start:dev": "npm-run-all start watch-routes",
-    "build": "npm run generate-routes && react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "npm run generate-routes && vite build",
+    "test": "vite test",
+    "eject": "vite eject",
+    "dev": "vite"
   },
   "eslintConfig": {
     "extends": [
@@ -50,7 +46,9 @@
   "devDependencies": {
     "@tanstack/router-cli": "^1.136.8",
     "@tanstack/router-plugin": "^1.136.8",
+    "@vitejs/plugin-react": "^5.1.1",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^7.2.2"
   }
 }
