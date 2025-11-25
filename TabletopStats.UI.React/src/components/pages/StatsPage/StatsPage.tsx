@@ -141,7 +141,6 @@ const StatsPage = ({
       // onPageChange={pageChange}
       // totalRowCount={data.totalRowCount}
     />
-    <
     </>
   );
 };
