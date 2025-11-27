@@ -24,7 +24,7 @@ const CreateSessionLogModal = ({
             &#10005;
           </button>
         </nav>
-        <div className="py-8 pl-4">{children}</div>
+        <div className="py-8 px-4">{children}</div>
       </div>
     </div>)
   return (

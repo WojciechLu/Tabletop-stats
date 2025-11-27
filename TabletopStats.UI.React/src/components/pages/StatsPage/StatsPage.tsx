@@ -1,6 +1,5 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { SimpleTable, HeaderObject, Theme } from "simple-table-core";
 import "simple-table-core/styles.css";
 import sessionLogService from "../../../services/sessionLogService";
@@ -8,6 +7,7 @@ import { guid } from "../../../models/types/Guid";
 import { SessionLogParsed } from "../../../models/SessionLog";
 import Footer from "./Footer";
 import CreateSessionLogModal from "../../common/Modal/CreateSessionLogModal";
+import StatsForm from "./StatsForm";
 
 const ROWS_PER_PAGE = 10;
 const headers: HeaderObject[] = [
@@ -149,7 +149,8 @@ const StatsPage = ({
       {showModal && (
         <CreateSessionLogModal
           onCloseModal={onCloseModal}
-          children={<h1 className="text-3xl font-bold underline">Hello world!</h1>}
+          title="Create session log"
+          children={<StatsForm/>}
         />
       )}
     </>
