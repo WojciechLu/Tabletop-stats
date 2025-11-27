@@ -26,9 +26,18 @@ public class RpgSystemRepository(RpgContext context): IRpgSystemRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<RpgSystem>> GetAllAsync()
+    public async Task<IEnumerable<RpgSystem>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await context.RpgSystems.ToListAsync();
+    }
+
+    public async Task<IEnumerable<RpgSystem>> GetAllLikeAsync(string? name = null)
+    {
+        if(name == null)
+        {
+            return await GetAllAsync();
+        }
+        return await context.RpgSystems.Where(r => r.Name.Contains(name)).ToListAsync();
     }
 
     public async Task<RpgSystem?> GetByCode(string code)
