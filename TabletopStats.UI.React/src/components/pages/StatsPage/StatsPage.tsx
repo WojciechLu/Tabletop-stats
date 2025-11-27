@@ -7,6 +7,7 @@ import sessionLogService from "../../../services/sessionLogService";
 import { guid } from "../../../models/types/Guid";
 import { SessionLogParsed } from "../../../models/SessionLog";
 import Footer from "./Footer";
+import CreateSessionLogModal from "../../common/Modal/CreateSessionLogModal";
 
 const ROWS_PER_PAGE = 10;
 const headers: HeaderObject[] = [
@@ -38,7 +39,7 @@ const headers: HeaderObject[] = [
     width: 100,
     isSortable: true,
     type: "string",
-    hide: true
+    hide: true,
   },
   {
     accessor: "gameMasterName",
@@ -80,7 +81,7 @@ const StatsPage = ({
 }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(ROWS_PER_PAGE);
-  const [showModal, onShowModal]= useState<boolean>(false);
+  const [showModal, onShowModal] = useState<boolean>(false);
 
   const { isPending, isError, error, data, isFetching } = useQuery({
     queryKey: ["playerSessionLogs", pageNumber, pageSize],
@@ -113,7 +114,11 @@ const StatsPage = ({
 
   const onCreateLogClick = () => {
     onShowModal(true);
-  }
+  };
+
+  const onCloseModal = () => {
+    onShowModal(false);
+  };
 
   if (isPending) {
     return <span>Loading...</span>;
@@ -125,22 +130,28 @@ const StatsPage = ({
 
   return (
     <>
-    <SimpleTable
-      defaultHeaders={headers}
-      editColumns
-      height={height}
-      rowIdAccessor="sessionId"
-      rowHeight={32}
-      selectableCells
-      rows={parsedRows}
-      rowsPerPage={pageSize}
-      serverSidePagination
-      shouldPaginate
-      theme={theme}
-      footerRenderer={(props) => <Footer {...props} onCreateLogClick={onCreateLogClick} />}
-      // onPageChange={pageChange}
-      // totalRowCount={data.totalRowCount}
-    />
+      <SimpleTable
+        defaultHeaders={headers}
+        editColumns
+        height={height}
+        rowIdAccessor="sessionId"
+        rowHeight={32}
+        selectableCells
+        rows={parsedRows}
+        rowsPerPage={pageSize}
+        serverSidePagination
+        shouldPaginate
+        theme={theme}
+        footerRenderer={(props) => (
+          <Footer {...props} onCreateLogClick={onCreateLogClick} />
+        )}
+      />
+      {showModal && (
+        <CreateSessionLogModal
+          onCloseModal={onCloseModal}
+          children={<h1 className="text-3xl font-bold underline">Hello world!</h1>}
+        />
+      )}
     </>
   );
 };
