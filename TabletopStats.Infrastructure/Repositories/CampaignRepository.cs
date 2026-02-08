@@ -31,8 +31,11 @@ public class CampaignRepository(RpgContext context): ICampaignRepository
         return campaign;
     }
 
-    public Task<IEnumerable<Campaign>> GetAllAsync()
+    public async Task<IEnumerable<Campaign>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var hardcodedUser = Guid.Parse("D6434E4D-0B8C-4892-9803-4702038BB818");
+        return await context.Campaigns.Include(x => x.GameMaster)
+            .Where(x => x.GameMaster.Id == hardcodedUser)
+            .ToListAsync();
     }
 }

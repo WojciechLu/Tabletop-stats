@@ -10,4 +10,5 @@ public class Campaign
     public string Name { get; set; }
     public string Description { get; set; }
     public ICollection<Adventure> Adventures { get; set; }
+    public Person GameMaster { get; set; }
 }
