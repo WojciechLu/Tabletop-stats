@@ -11,7 +11,7 @@ public class CreateSessionLogCommand: IRequest<BaseResponse<bool>>
     public string Description { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
-    public string RpgSystemCode { get; set; }
+    public RpgSystemDto RpgSystem { get; set; }
     public PersonDto? GameMaster { get; set; }
     public IEnumerable<PersonDto> Players { get; set; }
 }
